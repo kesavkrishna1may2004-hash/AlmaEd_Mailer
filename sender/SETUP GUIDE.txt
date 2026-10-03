@@ -1,0 +1,106 @@
+ALMAED WHATSAPP SENDER - SETUP GUIDE
+====================================
+
+How the pieces fit
+------------------
+* DASHBOARD (on Vercel): the website you open from any phone or laptop. You import the
+  alumni list, start/pause, read replies and answer them there.
+* DATABASE (on Supabase): keeps the contacts, messages, replies and settings.
+* THIS SENDER (on your laptop): links to the spare WhatsApp number and does the actual
+  sending. WhatsApp only allows a linked device that stays connected, which a website
+  can't do, so this small program has to run on a computer that is on during sending
+  hours (10am-7pm India time). When it's closed, the dashboard still works but nothing
+  is sent.
+
+Before you start
+----------------
+* Use a SPARE WhatsApp number, not the AlmaED number students and parents use, and not
+  your personal one. Cold messages can get a number banned; if that happens, only the
+  spare number is affected. Give it a profile photo and a name like "Kesav | AlmaED".
+* You need the Supabase "Project URL" and "secret key" (Part 1 of the README).
+* gowa (the free, open-source WhatsApp connector) is already in the "gowa" folder.
+
+
+ONE-TIME SETUP ON THE LAPTOP
+============================
+
+1. Install Node.js
+   Go to https://nodejs.org, download the "LTS" version (22 or newer) and install it with
+   the default options.
+
+2. Unzip this folder
+   Put the "AlmaED Sender" folder somewhere easy, e.g. Documents.
+
+3. Paste your Supabase details
+   Open config.json with Notepad (Windows) or TextEdit (Mac). Replace the two PASTE lines:
+       "supabaseUrl": "https://abcdefgh.supabase.co",
+       "supabaseServiceKey": "sb_secret_....",
+   Keep the quotes and the commas. Save and close.
+   The secret key can read and change everything in your database: never put it on the
+   website, in Vercel, in GitHub or in a chat.
+
+4. Start the sender
+   Windows: double-click  "Start AlmaED Sender.bat"
+            (If Windows says "Windows protected your PC", click More info -> Run anyway.)
+   Mac:     right-click  "Start AlmaED Sender.command" -> Open -> Open
+            (Only the first time. After that you can just double-click it.)
+   A black window opens and says "AlmaED sender ... is running". KEEP IT OPEN.
+
+5. Everything else happens on the dashboard
+   Open your Vercel address and sign in. The dot at the top turns yellow
+   ("WhatsApp not linked"). Then:
+     a. Click "Show QR code". On the spare phone: WhatsApp -> Settings (or the three
+        dots) -> Linked devices -> Link a device, and scan it. The dot turns green.
+     b. Contacts: in Google Sheets choose File -> Download -> Microsoft Excel (.xlsx),
+        then pick that file under Contacts and click "Import contacts".
+     c. Put your own number in "Your number for tests", click Save, then
+        "Send test to my number". Check both messages on your phone.
+     d. Click "Start sending".
+
+6. Keep the laptop awake during sending hours
+   Windows: Settings -> System -> Power -> when plugged in, sleep after "Never".
+   Mac:     System Settings -> Battery (or Energy) -> turn on "Prevent automatic sleeping
+            when the display is off" (on power adapter).
+
+
+DAILY USE
+=========
+* Double-click the start file each morning (or leave it running). It carries on exactly
+  where it stopped. Nobody is ever messaged twice.
+* Pace: 15 the first day, then 25, then 35, then the daily limit (50), with a random
+  1.5-4 minute gap, only between 10:00 and 19:00 India time.
+* Check "Needs your reply" on the dashboard a few times a day. You can answer there (it
+  sends from the spare number) or from the spare phone itself.
+* "Pause sending" stops new openers. Details for people who said yes still go out.
+* Run the sender on ONE computer only. A second copy refuses to start while the first
+  is running.
+
+
+IF SOMETHING GOES WRONG
+=======================
+The black window and the red bar on the dashboard say what's wrong. Most common:
+
+* "Open config.json ... paste your Supabase Project URL and secret key": step 3.
+* "...is the public (anon / publishable) key": you pasted the key meant for Vercel.
+  Use the SECRET key here.
+* "Supabase did not accept the key": copy the secret key again, all of it.
+* "The database tables are missing": run supabase/schema.sql in Supabase -> SQL Editor.
+* "Could not reach Supabase": check the internet and the supabaseUrl.
+* "Another sender is already running on a different computer": close it there, or wait
+  one minute if that computer was switched off without closing the window.
+* "Port 4000 is busy": the sender is already open in another window.
+* Dashboard says "Sender offline": the black window was closed, the laptop slept, or
+  it lost internet. Start it again.
+* Red bar "gowa could not start": usually Windows Security removed gowa by mistake.
+  Open Windows Security -> Virus & threat protection -> Protection history, click the
+  item for windows-amd64.exe -> Actions -> Restore (or Allow on device). If it isn't
+  listed, copy gowa\windows-amd64.exe from the zip back into the gowa folder. Then click
+  "Restart gowa" on the dashboard.
+  Mac: System Settings -> Privacy & Security -> scroll down -> "Allow Anyway".
+* QR code doesn't load, or can't reach WhatsApp's servers: campus Wi-Fi/LAN can block
+  WhatsApp's linking connection. Connect the laptop to a mobile hotspot and click
+  "Show QR code" again. If that works, keep the laptop on the hotspot while sending.
+* "This needs Node.js 22 or newer": install the current LTS from nodejs.org.
+
+gowa's own log is in logs/gowa.log. gowa v9.5.0 is open source (MIT licence):
+github.com/aldinokemal/go-whatsapp-web-multidevice

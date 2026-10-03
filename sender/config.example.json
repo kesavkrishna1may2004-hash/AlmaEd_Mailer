@@ -1,0 +1,15 @@
+{
+  "supabaseUrl": "PASTE your Supabase Project URL here",
+  "supabaseServiceKey": "PASTE your Supabase secret key here (sb_secret_... or the legacy service_role key)",
+  "webhookPort": 4000,
+  "gowa": {
+    "url": "http://127.0.0.1:3737",
+    "username": "admin",
+    "password": "",
+    "webhookSecret": "",
+    "autoStart": true,
+    "binaryFolder": "gowa",
+    "whatsappProxy": "",
+    "deviceId": "almaed"
+  }
+}

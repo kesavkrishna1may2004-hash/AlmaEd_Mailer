@@ -1,4 +1,7 @@
-// Pure helpers: names, phones, emails, opt-out detection, reply classification, message templates.
+// Pure helpers shared by the sender (Node) and the dashboard (browser):
+// names, phones, emails, opt-out detection, reply classification, message templates.
+// Keep sender/src/rules.js and dashboard/rules.js identical.
+(function (root) {
 'use strict';
 
 // ---------------------------------------------------------------- names
@@ -103,4 +106,7 @@ function renderMessage(template, person, rand = Math.random) {
     .replace(/\{name\}/g, person.name || first);
 }
 
-module.exports = { firstName, fullName, normalisePhone, pickEmail, skipReason, classifyReply, renderMessage };
+const api = { firstName, fullName, normalisePhone, pickEmail, skipReason, classifyReply, renderMessage };
+if (typeof module !== 'undefined' && module.exports) module.exports = api;
+else root.AlmaRules = api;
+})(typeof window !== 'undefined' ? window : globalThis);

@@ -1,0 +1,10 @@
+{
+  "name": "almaed-whatsapp-sender",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Runs gowa on this machine and sends AlmaED WhatsApp outreach from the queue in Supabase.",
+  "main": "src/index.js",
+  "scripts": { "start": "node src/index.js" },
+  "engines": { "node": ">=22" },
+  "dependencies": { "@supabase/supabase-js": "^2.117.2" }
+}
