@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AlmaED Outreach</title>
+<style>
+  :root {
+    --plum: #561132; --mag: #A3285A; --gold: #F7C766; --ink: #1E0A14;
+    --bg: #FAF6F3; --card: #FFFFFF; --line: #EADFE3; --muted: #7A6670;
+    --good: #1F8A55; --bad: #C0392B; --wa: #DCF8C6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  header { background: linear-gradient(120deg, var(--plum), var(--mag)); color: #fff; padding: 16px 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  header h1 { font-size: 19px; margin: 0; font-weight: 700; }
+  header h1 span { color: var(--gold); }
+  .pill { margin-left: auto; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; background: rgba(255,255,255,.15); display: flex; align-items: center; gap: 8px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #aaa; flex: none; }
+  .dot.on { background: #4ADE80; } .dot.off { background: #F87171; } .dot.wait { background: #FBBF24; }
+  .hbtn { background: transparent; border: 1px solid rgba(255,255,255,.45); color: #fff; border-radius: 9px; padding: 5px 10px; font-size: 13px; cursor: pointer; }
+  @media (max-width: 600px) { header { gap: 10px; } .hbtn { margin-left: auto; } .pill { order: 3; margin-left: 0; width: 100%; justify-content: center; } }
+  main { max-width: 1100px; margin: 0 auto; padding: 18px 16px 60px; display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { main { grid-template-columns: 1.35fr 1fr; } .full { grid-column: 1 / -1; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; min-width: 0; }
+  .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin: 0 0 12px; }
+  .control { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .big { font-size: 16px; font-weight: 700; padding: 12px 26px; border-radius: 12px; border: 0; cursor: pointer; color: #fff; background: var(--mag); }
+  .big.pause { background: var(--ink); } .big:disabled { opacity: .5; cursor: default; }
+  .waiting { font-weight: 600; } .sub { color: var(--muted); font-size: 13px; }
+  .bar { height: 10px; border-radius: 6px; background: #F1E6EA; overflow: hidden; margin: 8px 0 4px; }
+  .bar > div { height: 100%; background: linear-gradient(90deg, var(--mag), var(--gold)); width: 0; transition: width .4s; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 10px; }
+  .stat { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .stat b { display: block; font-size: 22px; line-height: 1.2; } .stat span { font-size: 12px; color: var(--muted); }
+  .stat.hl { border-color: var(--mag); background: #FDF2F6; }
+  .btn { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--ink); text-decoration: none; display: inline-block; }
+  .btn:hover { border-color: var(--mag); } .btn:disabled { opacity: .5; cursor: default; }
+  .btn.primary { background: var(--mag); border-color: var(--mag); color: #fff; } .btn.ghost { color: var(--muted); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .rcard { border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin-bottom: 12px; }
+  .rcard h3 { margin: 0; font-size: 15px; } .rcard .meta { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .thread { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 10px; max-height: 260px; overflow: auto; }
+  .msg { max-width: 85%; padding: 7px 10px; border-radius: 10px; font-size: 13px; white-space: pre-wrap; word-wrap: break-word; }
+  .msg.us { align-self: flex-end; background: var(--wa); } .msg.them { align-self: flex-start; background: #F1EEF0; }
+  textarea, input[type=text], input[type=email], input[type=password], input[type=number], input[type=tel] {
+    width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font: inherit; background: #fff; color: var(--ink); }
+  textarea { resize: vertical; min-height: 42px; }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 10px 0 4px; }
+  .grid2 { display: grid; gap: 0 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
+  .feed { list-style: none; margin: 0; padding: 0; max-height: 520px; overflow: auto; }
+  .feed li { padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 13px; display: flex; gap: 10px; }
+  .feed time { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .feed .error { color: var(--bad); } .feed .good { color: var(--good); } .feed .reply { color: var(--mag); font-weight: 600; } .feed .muted { color: var(--muted); }
+  .alert { border-radius: 14px; padding: 14px 16px; font-size: 14px; }
+  .alert.bad { background: #FDECEA; color: #7A1D14; border: 1px solid #F5C2BC; }
+  .alert.warn { background: #FFF6E0; color: #6B4A0B; border: 1px solid #F3DDA3; }
+  code { background: #F4EEF1; padding: 1px 5px; border-radius: 5px; font-size: 12.5px; }
+  pre { white-space: pre-wrap; font-size: 12px; margin: 10px 0 0; background: #fff; padding: 8px; border-radius: 8px; }
+  .link-grid { display: grid; gap: 18px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 700px) { .link-grid { grid-template-columns: 1.3fr 1fr; } }
+  .steps { margin: 0 0 14px; padding-left: 20px; } .steps li { margin-bottom: 4px; }
+  .qrbox { border: 1px dashed var(--line); border-radius: 14px; min-height: 240px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 13px; padding: 10px; }
+  .qrbox img { width: 100%; max-width: 280px; image-rendering: pixelated; }
+  .paircode { font-size: 28px; font-weight: 800; letter-spacing: 4px; color: var(--plum); margin-top: 10px; }
+  #login { max-width: 380px; margin: 60px auto; }
+  #toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 14px; display: none; max-width: 90vw; z-index: 10; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Alma<span>ED</span> · Outreach</h1>
+  <div class="pill" id="pill" hidden><span class="dot" id="dot"></span><span id="pilltext"></span></div>
+  <button class="hbtn" id="signout" hidden>Sign out</button>
+</header>
+
+<section class="card" id="login" hidden>
+  <h2>Sign in</h2>
+  <form id="loginForm">
+    <label for="email">Email</label><input id="email" type="email" autocomplete="username" required>
+    <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
+    <div class="row" style="margin-top:14px"><button class="btn primary" type="submit">Sign in</button><span class="sub" id="loginMsg"></span></div>
+  </form>
+</section>
+
+<section class="card" id="notAdmin" hidden style="max-width:640px;margin:60px auto"></section>
+
+<main id="app" hidden>
+  <section class="card full alert" id="alert" hidden></section>
+
+  <section class="card full" id="linkPanel" hidden>
+    <h2>Link your outreach WhatsApp</h2>
+    <div class="link-grid">
+      <div>
+        <ol class="steps">
+          <li>Click <b>Show QR code</b>.</li>
+          <li>On the spare phone: WhatsApp → <b>Settings</b> (or ⋮) → <b>Linked devices</b> → <b>Link a device</b>.</li>
+          <li>Scan the code. The dot at the top turns green when it's linked.</li>
+        </ol>
+        <div class="row"><button class="btn primary" id="qrBtn">Show QR code</button><span class="sub" id="qrInfo"></span></div>
+        <p class="sub" style="margin:14px 0 6px">Can't scan? Use a code instead (Link a device → <i>Link with phone number instead</i>):</p>
+        <div class="row"><input id="pairPhone" type="tel" placeholder="Spare number, e.g. 98765 43210" style="flex:1;min-width:180px"><button class="btn" id="pairBtn">Get code</button></div>
+        <div id="pairCode" class="paircode"></div>
+      </div>
+      <div class="qrbox"><img id="qrImg" alt="WhatsApp QR code" hidden><span id="qrPlaceholder">QR code appears here</span></div>
+    </div>
+  </section>
+
+  <section class="card full">
+    <div class="control">
+      <button class="big" id="toggle">Start sending</button>
+      <div style="flex:1;min-width:230px">
+        <div class="waiting" id="waiting">Loading…</div>
+        <div class="bar"><div id="todaybar"></div></div>
+        <div class="sub" id="todaytext"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card full"><h2>Progress</h2><div class="stats" id="stats"></div></section>
+
+  <section class="card"><h2>Needs your reply</h2><div id="needs"></div></section>
+  <section class="card"><h2>Activity</h2><ul class="feed" id="feed"></ul></section>
+
+  <section class="card">
+    <h2>Contacts</h2>
+    <p class="sub" style="margin-top:0">In Google Sheets: <b>File → Download → Microsoft Excel (.xlsx)</b>, then choose that file here. Only new numbers are added; people already messaged keep their status.</p>
+    <input type="file" id="file" accept=".xlsx,.xls">
+    <label style="font-weight:500"><input type="checkbox" id="skipEmailed"> Skip people the email script has already emailed</label>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="importBtn">Import contacts</button><button class="btn" id="exportBtn">Download status (CSV)</button></div>
+    <p class="sub" id="importInfo"></p>
+  </section>
+
+  <section class="card">
+    <h2>Messages &amp; settings</h2>
+    <label for="sOpener">First message (opener)</label><textarea id="sOpener" rows="9"></textarea>
+    <label for="sDetails">Details message (sent automatically to positive replies)</label><textarea id="sDetails" rows="9"></textarea>
+    <label for="sBye">Reply to "not interested" (leave empty to send nothing)</label><textarea id="sBye" rows="2"></textarea>
+    <p class="sub">{first} = first name · {name} = full name · [[a|b|c]] picks one at random · *text* is bold on WhatsApp</p>
+    <div class="grid2">
+      <div><label for="sTest">Your number for tests</label><input id="sTest" type="tel" placeholder="98765 43210"></div>
+      <div><label for="sLimit">Daily limit (max 80 advised)</label><input id="sLimit" type="number" min="1" max="500"></div>
+      <div><label for="sFrom">Send from (hour, IST)</label><input id="sFrom" type="number" min="0" max="23"></div>
+      <div><label for="sUntil">Send until (hour, IST)</label><input id="sUntil" type="number" min="1" max="24"></div>
+      <div><label for="sMin">Min gap (seconds)</label><input id="sMin" type="number" min="30"></div>
+      <div><label for="sMax">Max gap (seconds)</label><input id="sMax" type="number" min="30"></div>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn primary" id="saveBtn">Save</button><button class="btn" id="testBtn">Send test to my number</button><button class="btn ghost" id="restartBtn">Restart gowa</button></div>
+  </section>
+</main>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
+<script src="config.js"></script>
+<script src="rules.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
